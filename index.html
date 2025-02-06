@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentines Day</title> 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .gradient-background {
+      background: rgb(255, 208, 229);
+      background: linear-gradient(180deg, rgba(255, 208, 229, 1) 0%, rgba(255, 232, 242, 1) 36%, rgba(255, 255, 255, 1) 100%);
+    }
+
+    .bounce2 {
+      animation: bounce2 2s ease infinite;
+    }
+
+    @keyframes bounce2 {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body class="gradient-background">
+  <!-- First section with dddd.jpg -->
+  <div class="flex flex-col items-center justify-center h-screen" id="introSection">
+    <img src="./images/shiba-cute.gif" alt="Dog with rose" class="rounded-md w-[500px] h-auto shadow-lg mb-6" id="imageDisplay">
+    <button id="nextButton"
+      class="inline-flex items-center justify-center rounded-md text-[20px] font-medium transition hover:bg-blue-700 h-12 px-6 py-2 bg-blue-500 text-white">
+      Next
+    </button>
+  </div>
+
+  <!-- Main section with image1.gif -->
+  <div class="flex items-center justify-center h-screen hidden" id="mainSection">
+    <div class="flex flex-col items-center p-4">
+      <img id="imageDisplay2" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
+      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine?</h2>
+      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
+        <button id="yesButton"
+          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
+          Yes
+        </button>
+        <button id="noButton"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+    // Elements
+    const nextButton = document.getElementById('nextButton');
+    const introSection = document.getElementById('introSection');
+    const mainSection = document.getElementById('mainSection');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const imageDisplay2 = document.getElementById('imageDisplay2');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
+  
+    let noClickCount = 0;
+    let buttonHeight = 48; // Starting height in pixels
+    let buttonWidth = 80;
+    let fontSize = 20; // Starting font size in pixels
+    const imagePaths = [
+      "./images/image1.gif",
+      "./images/image2.gif",
+      "./images/image3.gif",
+      "./images/image4.gif",
+      "./images/image5.gif",
+      "./images/image6.gif",
+      "./images/image7.gif"
+    ];
+
+    // Function to make the "No" button blink and pop at random places except over the image
+    function blinkNoButton() {
+      const imageRect = imageDisplay.getBoundingClientRect(); // Get the bounding box of the image
+      const imageTop = imageRect.top;
+      const imageBottom = imageRect.bottom;
+      const imageLeft = imageRect.left;
+      const imageRight = imageRect.right;
+
+      setInterval(() => {
+        // Get the screen dimensions
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        // Generate random positions for the button
+        let randomLeft = Math.random() * (screenWidth - noButton.offsetWidth);
+        let randomTop = Math.random() * (screenHeight - noButton.offsetHeight);
+
+        // Ensure the button is not inside the image area
+        while (randomLeft >= imageLeft && randomLeft <= imageRight && randomTop >= imageTop && randomTop <= imageBottom) {
+          randomLeft = Math.random() * (screenWidth - noButton.offsetWidth);
+          randomTop = Math.random() * (screenHeight - noButton.offsetHeight);
+        }
+
+        // Set the random position
+        noButton.style.position = 'absolute';
+        noButton.style.left = `${randomLeft}px`;
+        noButton.style.top = `${randomTop}px`;
+
+        // Toggle the button visibility
+        noButton.style.visibility = (noButton.style.visibility === 'hidden') ? 'visible' : 'hidden';
+      }, 500); // 500 milliseconds (0.5 seconds)
+    }
+
+    // Add "Next" button functionality
+    nextButton.addEventListener('click', () => {
+      introSection.style.display = 'none'; // Hide intro section
+      mainSection.style.display = 'flex'; // Show main section
+      blinkNoButton(); // Start the blinking effect on the "No" button
+    });
+  
+    // Add "No" button functionality
+    noButton.addEventListener('click', function() {
+      if (noClickCount < 5) {
+        noClickCount++;
+        imageDisplay2.src = imagePaths[noClickCount];
+        buttonHeight += 35; // Increase height by 5px on each click
+        buttonWidth += 35;
+        fontSize += 25; // Increase font size by 1px on each click  
+        yesButton.style.height = `${buttonHeight}px`; // Update button height
+        yesButton.style.width = `${buttonWidth}px`;
+        yesButton.style.fontSize = `${fontSize}px`; // Update font size
+        if (noClickCount < 6) {
+          noButton.textContent = ["No", "Are you sure?", "BAWAL MO NO", "BALA KAAAAA :(", "SGE JUD DORAAAAA", ":p", ""][noClickCount];
+        }
+      }
+    });
+  
+    // Add "Yes" button functionality
+    yesButton.addEventListener('click', () => {
+      imageDisplay2.src = './images/image7.gif'; // Change to image7.gif
+      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
+      responseButtons.style.display = 'none'; // Hide both buttons
+      confetti(); // Trigger confetti animation
+    });
+  </script>  
+</body>
+</html>
