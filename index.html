@@ -7,8 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .gradient-background {
-      background: rgb(255, 208, 229);
-      background: linear-gradient(180deg, rgba(255, 208, 229, 1) 0%, rgba(255, 232, 242, 1) 36%, rgba(255, 255, 255, 1) 100%);
+      background: linear-gradient(180deg, rgb(29, 90, 170) 0%, rgb(221, 217, 228) 36%, rgba(255, 255, 255, 1) 100%);
     }
 
     .bounce2 {
@@ -16,40 +15,53 @@
     }
 
     @keyframes bounce2 {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-20px);
-      }
-      60% {
-        transform: translateY(-10px);
-      }
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
     }
   </style>
 </head>
 <body class="gradient-background">
-  <!-- First section with dddd.jpg -->
+  <!-- First Section (Intro) -->
   <div class="flex flex-col items-center justify-center h-screen" id="introSection">
-    <img src="./images/shiba-cute.gif" alt="Dog with rose" class="rounded-md w-[500px] h-auto shadow-lg mb-6" id="imageDisplay">
+    <img src="./images/HELLO.gif" alt="Dog with rose" class="rounded-md w-[500px] h-auto shadow-lg mb-6">
     <button id="nextButton"
-      class="inline-flex items-center justify-center rounded-md text-[20px] font-medium transition hover:bg-blue-700 h-12 px-6 py-2 bg-blue-500 text-white">
-      Next
+      class="inline-flex items-center justify-center rounded-md text-[20px] font-medium transition h-12 px-6 py-2 text-white bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 animate-gradient">
+      PADAYON
     </button>
   </div>
 
-  <!-- Main section with image1.gif -->
+  <!-- Main Section (Date Proposal) -->
   <div class="flex items-center justify-center h-screen hidden" id="mainSection">
     <div class="flex flex-col items-center p-4">
-      <img id="imageDisplay2" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
-      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine?</h2>
-      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
+      <img id="imageDisplay2" src="./images/BLINK.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
+      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">DATE TA IG 24 MAAM</h2>
+      <div class="flex gap-4 pt-[20px] items-center">
         <button id="yesButton"
-          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
+          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium hover:bg-[#3CB371] min-h-12 min-w-[75px] px-4 py-2 bg-[#2E8B57] text-white transition">
           Yes
         </button>
+        
         <button id="noButton"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white">
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition hover:bg-[#6B8E23] h-12 min-w-[75px] px-4 py-2 bg-[#556B2F] text-white">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- "IMO LIBRE" Section (Hidden Initially) -->
+  <div class="flex items-center justify-center h-screen hidden" id="imoLibreSection">
+    <div class="flex flex-col items-center p-4">
+      <img src="./images/SS.gif" alt="Cute reaction" class="rounded-md h-[300px]" style="object-fit: cover;" />
+      <h2 class="text-4xl font-bold italic text-[#bd1e59] my-4">IMO LIBRE??🎉</h2>
+      <div class="flex gap-4 pt-[20px] items-center">
+        <button id="yesButton2"
+          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium hover:bg-[#3CB371] min-h-12 min-w-[75px] px-4 py-2 bg-[#2E8B57] text-white transition">
+          OO LAGE
+        </button>
+        <button id="noButton2"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition hover:bg-[#6B8E23] h-12 min-w-[75px] px-4 py-2 bg-[#556B2F] text-white">
           No
         </button>
       </div>
@@ -63,92 +75,72 @@
     const nextButton = document.getElementById('nextButton');
     const introSection = document.getElementById('introSection');
     const mainSection = document.getElementById('mainSection');
+    const imoLibreSection = document.getElementById('imoLibreSection');
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
-    const imageDisplay = document.getElementById('imageDisplay');
+    const yesButton2 = document.getElementById('yesButton2');
+    const noButton2 = document.getElementById('noButton2');
     const imageDisplay2 = document.getElementById('imageDisplay2');
-    const valentineQuestion = document.getElementById('valentineQuestion');
-    const responseButtons = document.getElementById('responseButtons');
-  
+
     let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
+    let buttonHeight = 48; 
     let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+    let fontSize = 20;
+
+    // Image list
     const imagePaths = [
+      "./images/BLINK.gif",
       "./images/image1.gif",
       "./images/image2.gif",
       "./images/image3.gif",
       "./images/image4.gif",
       "./images/image5.gif",
       "./images/image6.gif",
-      "./images/image7.gif"
+      "./images/tantrum-kicking.gif" // Ensure this is the last image
     ];
-    let blinkInterval; // Declare a variable to store the interval ID
 
-    // Function to make the "No" button blink and pop at random places except over the image
-    function blinkNoButton() {
-      const imageRect = imageDisplay.getBoundingClientRect(); // Get the bounding box of the image
-      const imageTop = imageRect.top;
-      const imageBottom = imageRect.bottom;
-      const imageLeft = imageRect.left;
-      const imageRight = imageRect.right;
+    // Show the main section when clicking "Next"
+    nextButton.addEventListener('click', () => {
+      introSection.style.display = 'none'; 
+      mainSection.style.display = 'flex'; 
+    });
 
-      setInterval(() => {
-        // Get the screen dimensions
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
+    // "No" button functionality (changes images + enlarges Yes button)
+    noButton.addEventListener('click', function() {
+      if (noClickCount < imagePaths.length - 1) {
+        noClickCount++;
+        imageDisplay2.src = imagePaths[noClickCount]; // Update image
 
-        // Generate random positions for the button
-        let randomLeft = Math.random() * (screenWidth - noButton.offsetWidth);
-        let randomTop = Math.random() * (screenHeight - noButton.offsetHeight);
+        console.log("Changing to:", imageDisplay2.src); // Debugging log
 
-        // Ensure the button is not inside the image area
-        while (randomLeft >= imageLeft && randomLeft <= imageRight && randomTop >= imageTop && randomTop <= imageBottom) {
-          randomLeft = Math.random() * (screenWidth - noButton.offsetWidth);
-          randomTop = Math.random() * (screenHeight - noButton.offsetHeight);
+        // Make the "Yes" button bigger
+        buttonHeight += 35; 
+        buttonWidth += 35;
+        fontSize += 25;
+        yesButton.style.height = `${buttonHeight}px`;
+        yesButton.style.width = `${buttonWidth}px`;
+        yesButton.style.fontSize = `${fontSize}px`;
+
+        // Update "No" button text
+        const noTexts = ["No", "Are you sure?", "BAWAL MO NO", "BALA KAAAAA :(", "SGE JUD DORAAAAA", ":p"];
+        if (noClickCount < noTexts.length) {
+          noButton.textContent = noTexts[noClickCount];
         }
 
-        // Set the random position
-        noButton.style.position = 'absolute';
-        noButton.style.left = `${randomLeft}px`;
-        noButton.style.top = `${randomTop}px`;
-
-        // Toggle the button visibility
-        noButton.style.visibility = (noButton.style.visibility === 'hidden') ? 'visible' : 'hidden';
-      }, 500); // 500 milliseconds (0.5 seconds)
-    }
-
-    // Add "Next" button functionality
-    nextButton.addEventListener('click', () => {
-      introSection.style.display = 'none'; // Hide intro section
-      mainSection.style.display = 'flex'; // Show main section
-      blinkNoButton(); // Start the blinking effect on the "No" button
-    });
-  
-    // Add "No" button functionality
-    noButton.addEventListener('click', function() {
-      if (noClickCount < 5) {
-        noClickCount++;
-        imageDisplay2.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
-        buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click  
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
-        yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
-        if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "BAWAL MO NO", "BALA KAAAAA :(", "SGE JUD DORAAAAA", ":p", ""][noClickCount];
+        // Final "tantrum-kicking.gif" change
+        if (noClickCount === imagePaths.length - 1) {
+          imageDisplay2.src = "./images/tantrum-kicking.gif";
         }
       }
     });
-  
-    // Add "Yes" button functionality
+
+    // "Yes" button functionality (Show IMO LIBRE)
     yesButton.addEventListener('click', () => {
-      imageDisplay2.src = './images/image7.gif'; // Change to image7.gif
-      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
+      mainSection.style.display = 'none'; 
+      imoLibreSection.style.display = 'flex'; 
+      confetti(); // Fire confetti effect
     });
+
   </script>  
 </body>
 </html>
